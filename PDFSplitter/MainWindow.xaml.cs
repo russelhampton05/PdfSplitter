@@ -93,7 +93,7 @@ namespace PDFSplitter
 
             // Open the file
             PdfDocument inputDocument = PdfReader.Open(filePath, PdfDocumentOpenMode.Import);
-            var pages = pageCounts.Split(',').ToList();
+            var pages = pageCounts.Split(',').Where(page => !string.IsNullOrEmpty(page)).ToList();
             var fileCount = 0;
             var idx = 0;
            while(idx < inputDocument.PageCount)
