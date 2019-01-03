@@ -52,6 +52,7 @@ namespace PDFSplitter
         public MainWindow()
         {
             InitializeComponent();
+            pageCounts = "";
             this.DataContext = this;
         }
 
