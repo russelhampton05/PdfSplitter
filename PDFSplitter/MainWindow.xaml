@@ -5,17 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PDFSplitter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBox HorizontalAlignment="Left" Text="{Binding filePath}" Height="23" Margin="71,50,0,0" IsEnabled="False" TextWrapping="Wrap" VerticalAlignment="Top" Width="671"/>
-        <TextBox HorizontalAlignment="Left" Text="{Binding destinationDirectory}" Height="23" Margin="71,141,0,0" IsEnabled="False" TextWrapping="Wrap" VerticalAlignment="Top" Width="671"/>
-        <Label Content="File to Split&#xD;&#xA;&#xD;&#xA;" HorizontalAlignment="Left" Margin="71,19,0,0" VerticalAlignment="Top" Width="123"/>
-        <Label Content="Destination Directory&#xD;&#xA;" HorizontalAlignment="Left" Margin="71,102,0,0" VerticalAlignment="Top" Width="123"/>
-        <Button Content="Select File" HorizontalAlignment="Left" Margin="624,87,0,0" VerticalAlignment="Top" Width="118" Click="SelectFileClick"/>
-        <Button Content="Select Directory" HorizontalAlignment="Left" Margin="624,182,0,0" VerticalAlignment="Top" Click="SelectDirectoryClick" Width="118" RenderTransformOrigin="4.256,0.372"/>
-        <Button Content="Create" HorizontalAlignment="Left" Margin="709,391,0,0" VerticalAlignment="Top" Click="CreateClick" Width="75"/>
-        <TextBox  Text="{Binding pageCounts}" HorizontalAlignment="Left" Height="23" Margin="71,232,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="505"/>
-        <Label Content="Page Counts" HorizontalAlignment="Left" Margin="71,201,0,0" VerticalAlignment="Top" Width="256"/>
+        Title="MainWindow" Height="600" Width="900">
+    <TabControl>
+        <TabItem Header="Split File">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="89*"/>
+                    <ColumnDefinition Width="24*"/>
+                    <ColumnDefinition Width="773*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox HorizontalAlignment="Left" Text="{Binding filePath}" Height="23" Margin="71,50,0,0" IsEnabled="False" TextWrapping="Wrap" VerticalAlignment="Top" Width="671" Grid.ColumnSpan="3"/>
+                <TextBox HorizontalAlignment="Left" Text="{Binding destinationDirectory}" Height="23" Margin="71,141,0,0" IsEnabled="False" TextWrapping="Wrap" VerticalAlignment="Top" Width="671" Grid.ColumnSpan="3"/>
+                <Label Content="File to Split&#xD;&#xA;&#xD;&#xA;" HorizontalAlignment="Left" Margin="71,19,0,0" VerticalAlignment="Top" Width="123" Grid.ColumnSpan="3"/>
+                <Label Content="Destination Directory&#xD;&#xA;" HorizontalAlignment="Left" Margin="71,102,0,0" VerticalAlignment="Top" Width="123" Grid.ColumnSpan="3"/>
+                <Button Content="Select File" HorizontalAlignment="Left" Margin="511.483,87,0,0" VerticalAlignment="Top" Width="118" Click="SelectFileClick" Grid.Column="2"/>
+                <Button Content="Select Directory" HorizontalAlignment="Left" Margin="511.483,182,0,0" VerticalAlignment="Top" Click="SelectDirectoryClick" Width="118" RenderTransformOrigin="4.256,0.372" Grid.Column="2"/>
+                <Button Content="Create" HorizontalAlignment="Left" Margin="596.483,391,0,0" VerticalAlignment="Top" Click="CreateClick" Width="75" Grid.Column="2"/>
+                <TextBox  Text="{Binding pageCounts}" HorizontalAlignment="Left" Height="23" Margin="71,232,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="505" Grid.ColumnSpan="3"/>
+                <Label Content="Page Counts" HorizontalAlignment="Left" Margin="71,201,0,0" VerticalAlignment="Top" Width="256" Grid.ColumnSpan="3"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Combine Files">
+            <DockPanel LastChildFill="False">
+                <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                    <TextBox DockPanel.Dock="Bottom" HorizontalAlignment="Left" Text="{Binding destinationDirectory}" Height="23" Margin="5" IsEnabled="False" TextWrapping="Wrap" VerticalAlignment="Top" Width="671"/>
+                    <Label  DockPanel.Dock="Top" Content="Directory to combine" HorizontalAlignment="Left" Margin="5"  Width="123"/>
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Top">
+                    <Button Content="Select Directory" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" Click="SelectDirectoryClick" Width="118"/>
+                    <Button Content="Create" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" Click="CreateCombinedClick" Width="75"/>
+                </DockPanel>
 
-    </Grid>
+            </DockPanel>
+        </TabItem>
+    </TabControl>
 </Window>

@@ -8,14 +8,10 @@ using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace PDFSplitter
-{
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    /// 
-
+{ 
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private string _filePath;
@@ -86,7 +82,7 @@ namespace PDFSplitter
 
         private void CreateClick(object sender, RoutedEventArgs e)
         {
-            if(string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(destinationDirectory))
+            if (string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(destinationDirectory))
             {
                 return;
             }
@@ -96,7 +92,7 @@ namespace PDFSplitter
             var pages = pageCounts.Split(',').Where(page => !string.IsNullOrEmpty(page)).ToList();
             var fileCount = 0;
             var idx = 0;
-           while(idx < inputDocument.PageCount)
+            while (idx < inputDocument.PageCount)
             {
                 // Create new document
                 PdfDocument outputDocument = new PdfDocument();
@@ -104,7 +100,7 @@ namespace PDFSplitter
                 outputDocument.Info.Creator = inputDocument.Info.Creator;
 
                 // Add the page and save it
-                if(pages.Count > fileCount)
+                if (pages.Count > fileCount)
                 {
                     var pageCount = int.Parse(pages[fileCount]);
                     for (int x = 0; x < pageCount; x++)
@@ -122,6 +118,39 @@ namespace PDFSplitter
                 outputDocument.Save(Path.Combine(destinationDirectory, $"{idx}_{Path.GetFileName(filePath)}"));
                 fileCount++;
             }
+        }
+
+        private void SelectDirectoryCombineClick(object sender, RoutedEventArgs e)
+        {
+            SelectDirectoryClick(sender, e);
+        }
+
+        private void CreateCombinedClick(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(destinationDirectory))
+            {
+                return;
+            }
+            var directory = new DirectoryInfo(destinationDirectory);
+            var files = directory.GetFiles();
+            var pdfPages = new List<PdfPage>();
+          //  var openPdfStreams = List<PdfDocument>();
+
+            foreach (var file in files)
+            {
+                var pdf = PdfReader.Open(file.FullName, PdfDocumentOpenMode.Import);
+                for (var x = 0; x < pdf.Pages.Count; x++)
+                {
+                    pdfPages.Add(pdf.Pages[x]);
+                }
+            }
+
+            PdfDocument document = new PdfDocument();
+            foreach (var page in pdfPages)
+            {
+                document.AddPage(page);
+            }
+            document.Save(directory + "/combined.pdf");
         }
     }
 }
